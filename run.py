@@ -8,7 +8,7 @@ from sklearn.metrics import f1_score
 from src.data import get_arrays
 from src.denoise import denoise, mse, psnr
 from src.features import extract
-from src.models import LinearClassifier
+from src.models import SVM
 from src.noise import add_noise
 
 
@@ -51,7 +51,7 @@ def main():
         n = args.max_samples
         xs, ys, xt, yt = xs[:n], ys[:n], xt[:n], yt[:n]
 
-    model = LinearClassifier(C=args.C).fit(extract(xs.astype(np.float32) / 255.0, args.feature), ys)
+    model = SVM(C=args.C).fit(extract(xs.astype(np.float32) / 255.0, args.feature), ys)
 
     out = Path(args.output_dir)
     out.mkdir(parents=True, exist_ok=True)
